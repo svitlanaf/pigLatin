@@ -4,8 +4,7 @@ var vowels = 'aeiou'.split("");
 
 function translateWord(word){
   var output;
-  // var consonants = 'bcdfghjklmnpqrstvwyz'.split('');
-  // var vowels = 'aeiou'.split("");
+
   var splitWord = word.split("");
   var startOfWord = "";
 
