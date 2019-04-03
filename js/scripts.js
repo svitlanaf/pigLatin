@@ -8,12 +8,14 @@ function translateWord(word){
   var splitWord = word.split("");
   var startOfWord = "";
 
-  // if word starts with anything other than a letter, return the word.
+  //if word starts with anything other than a letter, return the word.
   if (!(vowels.includes(splitWord[0])) && !(consonants.includes(splitWord[0])) ) {
     output = word;
   } else {
     // If word starts with a vowel
     if (vowels.includes(splitWord[0])) {
+      // startOfWord = splitWord[0].toString();
+      // endOfWord = splitWord.slice(1).join("");
       output = splitWord.join("") + 'way';
     } else {
 
@@ -21,14 +23,15 @@ function translateWord(word){
       if (splitWord[0] === "q" && splitWord[1] === "u") {
         startOfWord = "qu";
         endOfWord = splitWord.slice(2).join("");
+        output = endOfWord + startOfWord + 'ay';
       // otherwise, split off initial consonants
       } else {
         var splitWord = splitInitialConsonants(word);
         var startOfWord = splitWord[0];
         var endOfWord = splitWord[1];
+        output = endOfWord + startOfWord + 'ay';
       }
     }
-    output = endOfWord + startOfWord + 'ay';
   }
 //    console.log(output);
     return output;
