@@ -1,5 +1,5 @@
-var consonants = 'bcdfghjklmnpqrstvwyz'.split('');
-var vowels = 'aeiou'.split("");
+var consonants = 'bcdfghjklmnpqrstvwyzBCDFGHJKLMNPQRSTVWYZ'.split('');
+var vowels = 'aeiouAEIOU'.split("");
 
 
 function translateWord(word){
