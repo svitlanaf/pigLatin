@@ -38,10 +38,10 @@ function splitInitialConsonants(word) {
   var splitWord = word.split("");
 
   // Handle special case with qu as not 1st letters
-  // if (splitWord[1] === "q" && splitWord[2] === "u") {
-  //   initialConsonants = splitWord[0].toString() + "qu";
-  //   endOfWord = splitWord.slice(3).join("");
-  // } else {
+  if (splitWord[1] === "q" && splitWord[2] === "u") {
+    initialConsonants = splitWord[0].toString() + "qu";
+    endOfWord = splitWord.slice(3).join("");
+  } else {
     // Capture the first letter
     if (consonants.includes(splitWord[0]) &&
       consonants.includes(splitWord[1]) &&
@@ -57,24 +57,18 @@ function splitInitialConsonants(word) {
       initialConsonants = splitWord.slice(0,1).join("");
       endOfWord = splitWord.slice(1).join("");
     }
-    //capture the second letter, if it's a consonant
-    // if (consonants.includes(splitWord[1])) {
-    //   initialConsonants = initialConsonants + splitWord[1].toString();
-    //   endOfWord = splitWord.slice(2).join("");
-    //
-    //
-    // }
-    // //capture the third letter, if it's a consonant
-    // if (consonants.includes(splitWord[2])) {
-    //   initialConsonants = initialConsonants + splitWord[2].toString();
-    //   endOfWord = splitWord.slice(3).join("");
-    // }
-
-//  }
-
+ }
     return [initialConsonants, endOfWord];
 }
 
+function translatePhrase(splitInput) {
+  var output = "";
+  //console.log(splitInput);
+  splitInput.forEach(function(word) {
+    output = output + " " + translateWord(word);
+  });
+  return output;
+}
 
 
 
@@ -83,9 +77,11 @@ $(document).ready(function() {
     event.preventDefault();
 
     var input = $("#input").val();
-    var splitInput = input.split(" ");
 
-    var output = translateWord(input);
+    // var splitInput = input.split(" ");
+    // var output = translateWord(input);
+    var splitInput = input.split(" ");
+    var output = translatePhrase(splitInput);
 
     $("#pigLatin").hide();
     $(".phrase").text(input);
