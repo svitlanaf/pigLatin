@@ -22,7 +22,6 @@ _Pig Latin takes the first consonant (or consonant cluster) of an English word, 
 
 * Words beginning with more than 3 consonants are not handled correctly.
 * y is always treated as a consonant.  So myself becomes elfmysay instead of yselfmay
-* program does not handle non-alphanumeric characters
 * Currently only supports words starting with lower case
 
 ## Support and contact details

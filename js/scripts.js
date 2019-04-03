@@ -8,21 +8,25 @@ function translateWord(word){
   var splitWord = word.split("");
   var startOfWord = "";
 
-
-  // If word starts with a vowel
-  if (vowels.includes(splitWord[0])) {
-    output = splitWord.join("") + 'way';
+  // if word starts with anything other than a letter, return the word.
+  if (!(vowels.includes(splitWord[0])) && !(consonants.includes(splitWord[0])) ) {
+    output = word;
   } else {
-
-    // if word starts with 'qu'
-    if (splitWord[0] === "q" && splitWord[1] === "u") {
-      startOfWord = "qu";
-      endOfWord = splitWord.slice(2).join("");
-    // otherwise, split off initial consonants
+    // If word starts with a vowel
+    if (vowels.includes(splitWord[0])) {
+      output = splitWord.join("") + 'way';
     } else {
-      var splitWord = splitInitialConsonants(word);
-      var startOfWord = splitWord[0];
-      var endOfWord = splitWord[1];
+
+      // if word starts with 'qu'
+      if (splitWord[0] === "q" && splitWord[1] === "u") {
+        startOfWord = "qu";
+        endOfWord = splitWord.slice(2).join("");
+      // otherwise, split off initial consonants
+      } else {
+        var splitWord = splitInitialConsonants(word);
+        var startOfWord = splitWord[0];
+        var endOfWord = splitWord[1];
+      }
     }
     output = endOfWord + startOfWord + 'ay';
   }
@@ -76,7 +80,6 @@ $(document).ready(function() {
     event.preventDefault();
 
     var input = $("#input").val();
-
     // var splitInput = input.split(" ");
     // var output = translateWord(input);
     var splitInput = input.split(" ");
