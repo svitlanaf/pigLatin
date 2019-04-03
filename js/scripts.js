@@ -83,14 +83,18 @@ $(document).ready(function() {
     event.preventDefault();
 
     var input = $("#input").val();
+    if ($('input').val() === "") {
+      alert ("Please enter your word");
+    } else {
     // var splitInput = input.split(" ");
     // var output = translateWord(input);
-    var splitInput = input.split(" ");
-    var output = translatePhrase(splitInput);
+      var splitInput = input.split(" ");
+      var output = translatePhrase(splitInput);
 
-    $("#pigLatin").hide();
-    $(".phrase").text(input);
-    $(".output").text(output);
-    $("#result").show();
+      $("#pigLatin").hide();
+      $(".phrase").text(input);
+      $(".output").text(output);
+      $("#result").show();
+    }
   });
 });
