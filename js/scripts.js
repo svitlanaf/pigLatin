@@ -1,5 +1,5 @@
-var consonants = 'bcdfghjklmnpqrstvwyzBCDFGHJKLMNPQRSTVWYZ'.split('');
-var vowels = 'aeiouAEIOU'.split("");
+var consonants = 'bcdfghjklmnpqrstvwyzBCDFGHJKLMNPQRSTVYWZ'.split('');
+var vowels = 'aeiouyAEIOUY'.split("");
 
 
 function translateWord(word){
@@ -7,6 +7,7 @@ function translateWord(word){
 
   var splitWord = word.split("");
   var startOfWord = "";
+  var endOfWord = "";
 
   //if word starts with anything other than a letter, return the word.
   if (!(vowels.includes(splitWord[0])) && !(consonants.includes(splitWord[0])) ) {
@@ -14,9 +15,15 @@ function translateWord(word){
   } else {
     // If word starts with a vowel
     if (vowels.includes(splitWord[0])) {
-      // startOfWord = splitWord[0].toString();
-      // endOfWord = splitWord.slice(1).join("");
-      output = splitWord.join("") + 'way';
+      // Make an exception if the word starts with a y
+      if (splitWord[0] === 'y' || splitWord[0] === 'Y') {
+        splitWord = splitInitialConsonants(word);
+        startOfWord = splitWord[0];
+        endOfWord = splitWord[1];
+        output = endOfWord + startOfWord + 'ay';
+      } else {
+        output = splitWord.join("") + 'way';
+      }
     } else {
 
       // if word starts with 'qu'
@@ -26,15 +33,14 @@ function translateWord(word){
         output = endOfWord + startOfWord + 'ay';
       // otherwise, split off initial consonants
       } else {
-        var splitWord = splitInitialConsonants(word);
-        var startOfWord = splitWord[0];
-        var endOfWord = splitWord[1];
+        splitWord = splitInitialConsonants(word);
+        startOfWord = splitWord[0];
+        endOfWord = splitWord[1];
         output = endOfWord + startOfWord + 'ay';
       }
     }
   }
-//    console.log(output);
-    return output;
+  return output;
 }
 
 function splitInitialConsonants(word) {
@@ -48,28 +54,38 @@ function splitInitialConsonants(word) {
     initialConsonants = splitWord[0].toString() + "qu";
     endOfWord = splitWord.slice(3).join("");
   } else {
-    // Capture the first letter
-    if (consonants.includes(splitWord[0]) &&
-      consonants.includes(splitWord[1]) &&
-      consonants.includes(splitWord[2])) {
-      initialConsonants = splitWord.slice(0,3).join("");
-      endOfWord = splitWord.slice(3).join("");
 
-    } else if (consonants.includes(splitWord[0]) &&
-      consonants.includes(splitWord[1])) {
-      initialConsonants = splitWord.slice(0,2).join("");
-      endOfWord = splitWord.slice(2).join("");
-    } else if (consonants.includes(splitWord[0])) {
+    // if 2nd letter is a y, treat as vowel
+    if (splitWord[1] === 'y' || splitWord[1] === 'Y') {
       initialConsonants = splitWord.slice(0,1).join("");
       endOfWord = splitWord.slice(1).join("");
-    }
- }
-    return [initialConsonants, endOfWord];
+
+    // Capture the first 3 letters if they are all consonants
+    } else if (consonants.includes(splitWord[0]) &&  consonants.includes(splitWord[1]) && consonants.includes(splitWord[2])) {
+        initialConsonants = splitWord.slice(0,3).join("");
+        endOfWord = splitWord.slice(3).join("");
+
+      // Capture the first 2 letters if they both all consonants
+      } else if (consonants.includes(splitWord[0]) && consonants.includes(splitWord[1])) {
+            initialConsonants = splitWord.slice(0,1).join("");
+            endOfWord = splitWord.slice(1).join("");
+          } else {
+            initialConsonants = splitWord.slice(0,2).join("");
+            endOfWord = splitWord.slice(2).join("");
+
+      // else capture the 1st letter, if it's followed by a vowel
+      } else if (consonants.includes(splitWord[0])) {
+        initialConsonants = splitWord.slice(0,1).join("");
+        endOfWord = splitWord.slice(1).join("");
+      }
+  }
+
+  return [initialConsonants, endOfWord];
 }
 
 function translatePhrase(splitInput) {
   var output = "";
-  //console.log(splitInput);
+
   splitInput.forEach(function(word) {
     output = output + " " + translateWord(word);
   });
@@ -86,8 +102,6 @@ $(document).ready(function() {
     if ($('input').val() === "") {
       alert ("Please enter your word");
     } else {
-    // var splitInput = input.split(" ");
-    // var output = translateWord(input);
       var splitInput = input.split(" ");
       var output = translatePhrase(splitInput);
 
