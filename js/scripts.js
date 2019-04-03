@@ -1,19 +1,25 @@
 function translateWord(word){
   var output;
-  var consonants = 'bcdfghjklmnprstvwyz'.split('');
+  var consonants = 'bcdfghjklmnpqrstvwyz'.split('');
   var vowels = 'aeiou'.split("");
   var splitWord = word.split("");
+  var startOfWord = "";
+
 
   // If word starts with a vowel
   if (vowels.includes(splitWord[0])) {
     output = splitWord.join("") + 'way';
   } else {
-    var splitWord = splitInitialConsonants(word);
-    var initialConsonants = splitWord[0];
-    var endOfWord = splitWord[1];
-    // console.log(initialConsonants);
-    // console.log(endOfWord);
-    output = endOfWord + initialConsonants + 'ay';
+
+    if (splitWord[0] === "q" && splitWord[1] === "u") {
+      startOfWord = "qu";
+      endOfWord = splitWord.slice(2).join("");
+    } else {
+      var splitWord = splitInitialConsonants(word);
+      var startOfWord = splitWord[0];
+      var endOfWord = splitWord[1];
+    }
+    output = endOfWord + startOfWord + 'ay';
   }
     console.log(output);
     return output;
