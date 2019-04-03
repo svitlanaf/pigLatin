@@ -27,7 +27,7 @@ function translateWord(word){
     }
     output = endOfWord + startOfWord + 'ay';
   }
-    console.log(output);
+//    console.log(output);
     return output;
 }
 
@@ -38,27 +38,40 @@ function splitInitialConsonants(word) {
   var splitWord = word.split("");
 
   // Handle special case with qu as not 1st letters
-  if (splitWord[1] === "q" && splitWord[2] === "u") {
-    initialConsonants = splitWord[0].toString() + "qu";
-    endOfWord = splitWord.slice(3).join("");
-  } else {
+  // if (splitWord[1] === "q" && splitWord[2] === "u") {
+  //   initialConsonants = splitWord[0].toString() + "qu";
+  //   endOfWord = splitWord.slice(3).join("");
+  // } else {
     // Capture the first letter
-    if (consonants.includes(splitWord[0])) {
-      initialConsonants = splitWord[0].toString();
+    if (consonants.includes(splitWord[0]) &&
+      consonants.includes(splitWord[1]) &&
+      consonants.includes(splitWord[2])) {
+      initialConsonants = splitWord.slice(0,3).join("");
+      endOfWord = splitWord.slice(3).join("");
+
+    } else if (consonants.includes(splitWord[0]) &&
+      consonants.includes(splitWord[1])) {
+      initialConsonants = splitWord.slice(0,2).join("");
+      endOfWord = splitWord.slice(2).join("");
+    } else if (consonants.includes(splitWord[0])) {
+      initialConsonants = splitWord.slice(0,1).join("");
       endOfWord = splitWord.slice(1).join("");
     }
-
     //capture the second letter, if it's a consonant
-    if (consonants.includes(splitWord[1])) {
-      initialConsonants = initialConsonants + splitWord[1].toString();
-      endOfWord = splitWord.slice(2).join("");
-    }
-    //capture the third letter, if it's a consonant
-    if (consonants.includes(splitWord[2])) {
-      initialConsonants = initialConsonants + splitWord[2].toString();
-      endOfWord = splitWord.slice(3).join("");
-    }
-  }
+    // if (consonants.includes(splitWord[1])) {
+    //   initialConsonants = initialConsonants + splitWord[1].toString();
+    //   endOfWord = splitWord.slice(2).join("");
+    //
+    //
+    // }
+    // //capture the third letter, if it's a consonant
+    // if (consonants.includes(splitWord[2])) {
+    //   initialConsonants = initialConsonants + splitWord[2].toString();
+    //   endOfWord = splitWord.slice(3).join("");
+    // }
+
+//  }
+
     return [initialConsonants, endOfWord];
 }
 
